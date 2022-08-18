@@ -1,29 +1,30 @@
 # Use Red Hat Universal Base Image 8 - Minimal
-FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+#FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+FROM image-registry.openshift-image-registry.svc:5000/${PROJECT}/giteawget:${GITEA_VERSION}
 
 # Set the Gitea Version to install.
 # Check https://dl.gitea.io/gitea/ for available versions.
-ENV GITEA_VERSION="1.17.0"
+#ENV GITEA_VERSION="1.17.0"
 ENV APP_HOME=/home/gitea
-ENV REPO_HOME=/gitea-repositories
+ENV REPO_HOME=/home/gitea/data/gitea-repositories
 
-LABEL name="Gitea - Git Service" \
-      vendor="Gitea" \
-      io.k8s.display-name="Gitea - Git Service" \
-      io.openshift.expose-services="3000,gitea" \
-      io.openshift.tags="gitea" \
-      build-date="2022-07-31" \
-      version=$GITEA_VERSION \
-      release="1" \
-      maintainer="Wolfgang Kulhanek <wolfgang@famkulhanek.com>"
+#LABEL name="Gitea - Git Service" \
+#      vendor="Gitea" \
+#      io.k8s.display-name="Gitea - Git Service" \
+#      io.openshift.expose-services="3000,gitea" \
+#      io.openshift.tags="gitea" \
+#      build-date="2022-07-31" \
+#      version=$GITEA_VERSION \
+#      release="1" \
+#      maintainer="Wolfgang Kulhanek <wolfgang@famkulhanek.com>"
 
 COPY ./root /
 
 # Update latest packages and install Prerequisites
-RUN microdnf -y update \
-    && microdnf -y install git ca-certificates openssh gettext openssh tzdata tar gzip bzip2 \
-    && microdnf -y clean all \
-    && rm -rf /var/cache/yum
+#RUN microdnf -y update \
+#    && microdnf -y install git ca-certificates openssh gettext openssh tzdata tar gzip bzip2 \
+#    && microdnf -y clean all \
+#    && rm -rf /var/cache/yum
 
 RUN adduser gitea --home-dir=/home/gitea \
     && mkdir ${REPO_HOME} \
@@ -32,12 +33,14 @@ RUN adduser gitea --home-dir=/home/gitea \
     && mkdir -p ${APP_HOME}/data/lfs \
     && mkdir -p ${APP_HOME}/conf \
     && mkdir /.ssh \
-    && curl -L -o ${APP_HOME}/gitea https://dl.gitea.io/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-amd64 \
+#    && curl -L -o ${APP_HOME}/gitea https://dl.gitea.io/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-amd64 \
+    && cp -p gitea ${APP_HOME}/gitea \
     && chmod 775 ${APP_HOME}/gitea \
     && chown gitea:root ${APP_HOME}/gitea \
     && chgrp -R 0 ${APP_HOME} \
     && chgrp -R 0 /.ssh \
     && chmod -R g=u ${APP_HOME} /etc/passwd
+    && chmod -R +x /usr/bin
 
 WORKDIR ${APP_HOME}
 VOLUME ${REPO_HOME}
