@@ -34,7 +34,7 @@ RUN adduser gitea --home-dir=/home/gitea \
     && mkdir -p ${APP_HOME}/conf \
     && mkdir /.ssh \
     && curl -L -o ${APP_HOME}/gitea https://dl.gitea.io/gitea/${GITEA_VERSION}/gitea-${GITEA_VERSION}-linux-amd64 \
-    && cp -p gitea ${APP_HOME}/gitea \
+    # && cp -p gitea ${APP_HOME}/gitea \
     && chmod 775 ${APP_HOME}/gitea \
     && chown gitea:root ${APP_HOME}/gitea \
     && chgrp -R 0 ${APP_HOME} \
