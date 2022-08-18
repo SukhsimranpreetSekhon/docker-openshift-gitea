@@ -1,6 +1,6 @@
 # Use Red Hat Universal Base Image 8 - Minimal
-#FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
-FROM image-registry.openshift-image-registry.svc:5000/${PROJECT}/giteawget:${GITEA_VERSION}
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+#FROM image-registry.openshift-image-registry.svc:5000/${PROJECT}/giteawget:${GITEA_VERSION}
 
 # Set the Gitea Version to install.
 # Check https://dl.gitea.io/gitea/ for available versions.
