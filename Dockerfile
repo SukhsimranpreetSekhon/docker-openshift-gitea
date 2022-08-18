@@ -6,7 +6,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 # Check https://dl.gitea.io/gitea/ for available versions.
 #ENV GITEA_VERSION="1.17.0"
 ENV APP_HOME=/home/gitea
-ENV REPO_HOME=/home/gitea/data/gitea-repositories
+ENV REPO_HOME=/gitea-repositories
 
 #LABEL name="Gitea - Git Service" \
 #      vendor="Gitea" \
