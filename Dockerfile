@@ -4,7 +4,7 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 # Set the Gitea Version to install.
 # Check https://dl.gitea.io/gitea/ for available versions.
-#ENV GITEA_VERSION="1.17.0"
+ENV GITEA_VERSION="1.17.0"
 ENV APP_HOME=/home/gitea
 ENV REPO_HOME=/gitea-repositories
 
@@ -39,7 +39,7 @@ RUN adduser gitea --home-dir=/home/gitea \
     && chown gitea:root ${APP_HOME}/gitea \
     && chgrp -R 0 ${APP_HOME} \
     && chgrp -R 0 /.ssh \
-    && chmod -R g=u ${APP_HOME} /etc/passwd \
+    && chmod -R g=u ${APP_HOME} /etc/passwd
     # && chmod -R +x /usr/bin
 
 WORKDIR ${APP_HOME}
