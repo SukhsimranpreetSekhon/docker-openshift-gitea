@@ -40,7 +40,7 @@ RUN adduser gitea --home-dir=/home/gitea \
     && chgrp -R 0 ${APP_HOME} \
     && chgrp -R 0 /.ssh \
     && chmod -R g=u ${APP_HOME} /etc/passwd \
-    && chmod -R +x /usr/bin
+    # && chmod -R +x /usr/bin
 
 WORKDIR ${APP_HOME}
 VOLUME ${REPO_HOME}
